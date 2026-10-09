@@ -1,42 +1,652 @@
-<!doctype html>
-<html lang="en-NZ">
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TaxiTracker</title>
-<style>
-  body { margin:0; padding:0 1.25rem 5rem; background:#FFFFFF; color:#14211C;
-    font:16px/1.65 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif; }
-  main { max-width:44rem; margin:0 auto; }
-  header { padding:4rem 0 1.5rem; border-bottom:2px solid #0B6B4A; margin-bottom:2rem; }
-  h1 { font-size:2.2rem; margin:0 0 .5rem; letter-spacing:-.02em; }
-  .lead { font-size:1.1rem; color:#5A6A62; margin:0; }
-  ul { list-style:none; padding:0; }
-  li { margin:.6rem 0; }
-  a { color:#0B6B4A; font-weight:600; }
-  footer { margin-top:3rem; padding-top:1.25rem; border-top:1px solid #DCE3DD; color:#5A6A62; font-size:.9rem; }
-</style>
+<title>TaxiTracker – Driver Logbook | RUKAPPSL</title>
+<meta name="description" content="TaxiTracker is a GPS logbook for taxi and rideshare drivers. Start Trip reminders, fares, expenses, receipt photos and a tax-ready Excel report. 7-day free trial on Google Play.">
+<link rel="icon" href="assets/app-icon.png">
+<script src="./support.js"></script>
 </head>
 <body>
-<main>
-  <header>
-    <h1>TaxiTracker</h1>
-    <p class="lead">Automatic mileage and expense tracking for New Zealand taxi and rideshare drivers.</p>
+<noscript><div style="padding:40px 20px;font-family:sans-serif;background:#0B100C;color:#F5F6F4"><h1>TaxiTracker – Driver Logbook</h1><p>A GPS logbook for taxi and rideshare drivers, by RUKAPPSL.</p><p><a href="https://play.google.com/store/apps/details?id=com.rukappsl.taxitracker" style="color:#34D399">Get it on Google Play</a> · <a href="/privacy-policy" style="color:#34D399">Privacy policy</a> · <a href="/delete-account" style="color:#34D399">Delete account</a> · <a href="mailto:rukappsl@gmail.com" style="color:#34D399">rukappsl@gmail.com</a></p></div></noscript>
+<x-dc>
+<helmet>
+<title>TaxiTracker – Driver Logbook | RUKAPPSL</title>
+<meta name="description" content="TaxiTracker is a GPS logbook for taxi and rideshare drivers. Start Trip reminders, fares, expenses, receipt photos and a tax-ready Excel report. 7-day free trial on Google Play.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>html{scroll-behavior:smooth}body{margin:0;background:#0B100C;color:#F5F6F4;font-family:Poppins,system-ui,sans-serif;-webkit-font-smoothing:antialiased}*{box-sizing:border-box}a{color:#34D399;text-decoration:none}a:hover{color:#6EE7B7}@keyframes ttpulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,0.7)}70%{box-shadow:0 0 0 10px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}</style>
+<meta name="ext-resource-dependency" content="assets/home-start.jpg" data-resource-id="fHome">
+<meta name="ext-resource-dependency" content="social/trips.jpg" data-resource-id="fTrips">
+<meta name="ext-resource-dependency" content="social/charts.jpg" data-resource-id="fCharts">
+<meta name="ext-resource-dependency" content="social/expense-form.jpg" data-resource-id="fExpense">
+<meta name="ext-resource-dependency" content="social/reports.jpg" data-resource-id="fReports">
+<meta name="ext-resource-dependency" content="social/country.jpg" data-resource-id="fCountry">
+<script src="./report-data.js"></script>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0E9F6E"/><rect x="30" y="30" width="40" height="40" rx="10" fill="#fff"/><circle cx="50" cy="40" r="4" fill="#161B16"/><rect x="47" y="47" width="6" height="15" rx="3" fill="#161B16"/></svg></template>
+</helmet>
+<div style="min-height:100vh;background:#0B100C;overflow-x:hidden">
+
+  <header style="position:sticky;top:0;z-index:20;background:rgba(11,16,12,0.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+      <a href="#top" style="display:flex;align-items:center;gap:12px;color:#F5F6F4">
+        <img src="assets/app-icon.png" alt="TaxiTracker" style="width:36px;height:36px;border-radius:10px">
+        <div style="display:flex;flex-direction:column;line-height:1.05">
+          <div style="font:800 19px Poppins,sans-serif;letter-spacing:-0.02em"><span style="color:#fff">Taxi</span><span style="color:#34D399">Tracker</span></div>
+          <div style="font:600 10px Poppins,sans-serif;letter-spacing:0.18em;color:#7F8981">BY RUKAPPSL</div>
+        </div>
+      </a>
+      <nav style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;font:500 15px Poppins,sans-serif">
+        <a href="#reminders" style="color:#C9D1CB;padding:8px 12px;border-radius:10px" style-hover="color:#fff;background:rgba(255,255,255,0.06)">Reminders</a>
+        <a href="#features" style="color:#C9D1CB;padding:8px 12px;border-radius:10px" style-hover="color:#fff;background:rgba(255,255,255,0.06)">Features</a>
+        <a href="#report" style="color:#C9D1CB;padding:8px 12px;border-radius:10px" style-hover="color:#fff;background:rgba(255,255,255,0.06)">Excel report</a>
+        <a href="#pricing" style="color:#C9D1CB;padding:8px 12px;border-radius:10px" style-hover="color:#fff;background:rgba(255,255,255,0.06)">Pricing</a>
+        <a href="#faq" style="color:#C9D1CB;padding:8px 12px;border-radius:10px" style-hover="color:#fff;background:rgba(255,255,255,0.06)">FAQ</a>
+        <a href="https://play.google.com/store/apps/details?id=com.rukappsl.taxitracker" target="_blank" rel="noopener" style="margin-left:6px;background:#0E9F6E;color:#fff;padding:10px 18px;border-radius:999px;font-weight:600" style-hover="background:#12B47D;color:#fff">Get the app</a>
+      </nav>
+    </div>
   </header>
 
-  <p>TaxiTracker logs the distance you drive using GPS, records your running costs, and produces an
-  Excel workbook at year end summarising your IRD-allowable deductions.</p>
+  <section id="top" data-screen-label="Hero" style="position:relative;padding:80px 24px 96px">
+    <div style="position:absolute;width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle, rgba(14,159,110,0.30), rgba(14,159,110,0) 62%);right:-260px;top:-220px;pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:26px">
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);color:#D1FAE5;font:600 14px Poppins,sans-serif;padding:8px 14px;border-radius:999px">
+            <div style="width:9px;height:9px;border-radius:50%;background:#34D399;animation:ttpulse 2s infinite"></div>Live now on Google Play
+          </div>
+          <a href="#reminders" style="display:flex;align-items:center;gap:8px;background:#E8A33D;color:#161B16;font:700 14px Poppins,sans-serif;padding:8px 14px;border-radius:999px" style-hover="color:#161B16;background:#F0B356">NEW · Start Trip reminders</a>
+        </div>
+        <h1 style="margin:0;font:800 clamp(44px,6.2vw,80px)/1.0 Poppins,sans-serif;letter-spacing:-0.035em;text-wrap:balance">Your logbook, <span style="color:#34D399">automatic.</span></h1>
+        <p style="margin:0;font:400 20px/1.6 Poppins,sans-serif;color:#C9D1CB;max-width:560px;text-wrap:pretty">TaxiTracker reminds you to start a trip when you get in the car or your shift begins. One tap and GPS counts every kilometre. Fares, expenses, receipt photos and a tax-ready Excel report, all in one app.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:center">
+          <a href="https://play.google.com/store/apps/details?id=com.rukappsl.taxitracker" target="_blank" rel="noopener" style="display:block;line-height:0"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" style="height:86px;margin:-13px"></a>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <div style="font:700 18px Poppins,sans-serif;color:#fff">7-day free trial</div>
+            <div style="font:400 14px Poppins,sans-serif;color:#A7B0A9">Android · for taxi and rideshare drivers</div>
+          </div>
+        </div>
+        <a href="#report" style="align-self:flex-start;display:flex;align-items:center;gap:10px;color:#F5F6F4;font:600 16px Poppins,sans-serif;padding:12px 18px;border-radius:14px;border:1px solid rgba(255,255,255,0.16)" style-hover="border-color:#34D399;color:#fff">See a real Excel report <span style="color:#34D399">→</span></a>
+      </div>
+      <div style="position:relative;height:640px;width:min(100%,440px);margin:0 auto">
+        <div style="position:absolute;left:0;top:50px;transform:rotate(-6deg);width:min(250px,52%);aspect-ratio:250/556;border-radius:36px;overflow:hidden;box-shadow:0 0 0 7px #1B221C,0 40px 90px rgba(0,0,0,0.6);opacity:0.92"><img src="social/charts.jpg" alt="Earnings chart" style="width:100%;height:100%;display:block"></div>
+        <div style="position:absolute;right:0;top:0;width:min(280px,64%);aspect-ratio:280/622;border-radius:40px;overflow:hidden;box-shadow:0 0 0 8px #1B221C,0 50px 110px rgba(0,0,0,0.65)"><img src="assets/home-recording.jpg" alt="TaxiTracker recording a trip" style="width:100%;height:100%;display:block"></div>
+        <div style="position:absolute;right:0;top:70px;width:min(330px,calc(100% - 8px));transform:translateY({{ heroNoteY }}px);opacity:{{ heroNoteO }};transition:opacity 0.5s ease, transform 0.5s cubic-bezier(.2,.8,.2,1);background:rgba(250,250,248,0.98);border-radius:22px;padding:14px 16px;box-shadow:0 0 0 6px rgba(52,211,153,0.25),0 24px 60px rgba(0,0,0,0.55);color:#161B16">
+          <div style="display:flex;align-items:center;gap:10px"><img src="assets/app-icon.png" alt="" style="width:28px;height:28px;border-radius:7px"><div style="font:500 13px Poppins,sans-serif;color:#5E6760">TaxiTracker · now</div></div>
+          <div style="margin-top:8px;font:700 18px/1.2 Poppins,sans-serif">Start a trip?</div>
+          <div style="margin-top:2px;font:400 15px/1.35 Poppins,sans-serif;color:#2B332C">Connected to My Car — tap to record</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <ul>
-    <li><a href="./privacy.html">Privacy Policy</a></li>
-    <li><a href="./delete-account.html">Delete your account</a></li>
-  </ul>
+  <section data-screen-label="Facts" style="border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);background:#0F1510">
+    <div style="max-width:1200px;margin:0 auto;padding:22px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px 28px">
+      <sc-for list="{{ facts }}" as="f" hint-placeholder-count="5">
+        <div style="display:flex;align-items:center;gap:10px;font:600 15px Poppins,sans-serif;color:#C9D1CB"><div style="width:8px;height:8px;border-radius:2px;background:#34D399"></div>{{ f }}</div>
+      </sc-for>
+    </div>
+  </section>
 
-  <footer>
-    <p><strong>TaxiTracker is a record-keeping tool, not tax advice.</strong> Always confirm figures
-    and the current IRD kilometre rate with your accountant before filing.</p>
-    <p>RUK APPSL Limited, Auckland, New Zealand &middot; rukappsl@gmail.com</p>
+  <section id="reminders" data-screen-label="Reminders" style="padding:110px 24px 100px;position:relative">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:52px">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:780px">
+        <div style="display:flex;align-items:center;gap:12px"><div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">Start Trip reminders</div><div style="background:#E8A33D;color:#161B16;font:700 12px Poppins,sans-serif;padding:4px 10px;border-radius:999px">NEW</div></div>
+        <h2 style="margin:0;font:800 clamp(34px,4.4vw,56px)/1.05 Poppins,sans-serif;letter-spacing:-0.03em;text-wrap:balance">The trips you lose money on are the ones you forget to start.</h2>
+        <p style="margin:0;font:400 19px/1.6 Poppins,sans-serif;color:#C9D1CB;text-wrap:pretty">So TaxiTracker reminds you, two ways. Pick one or use both. It's a reminder you tap, not automatic recording, so you stay in control.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+        <button onClick="{{ pickBt }}" style="text-align:left;cursor:pointer;background:{{ btTabBg }};border:2px solid {{ btTabBorder }};border-radius:24px;padding:26px;color:#F5F6F4;display:flex;flex-direction:column;gap:10px;font-family:Poppins,sans-serif;transition:all 0.25s">
+          <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:12px;background:#0E9F6E;color:#fff;display:flex;align-items:center;justify-content:center;font:800 18px Poppins,sans-serif">1</div><div style="font:700 22px/1.2 Poppins,sans-serif">When you get in the car</div></div>
+          <div style="font:400 16px/1.55 Poppins,sans-serif;color:#C9D1CB">Your phone connects to your car's Bluetooth and a reminder pops up: "Start a trip? Connected to My Car — tap to record".</div>
+        </button>
+        <button onClick="{{ pickShift }}" style="text-align:left;cursor:pointer;background:{{ shTabBg }};border:2px solid {{ shTabBorder }};border-radius:24px;padding:26px;color:#F5F6F4;display:flex;flex-direction:column;gap:10px;font-family:Poppins,sans-serif;transition:all 0.25s">
+          <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:12px;background:#0E9F6E;color:#fff;display:flex;align-items:center;justify-content:center;font:800 18px Poppins,sans-serif">2</div><div style="font:700 22px/1.2 Poppins,sans-serif">When your shift starts</div></div>
+          <div style="font:400 16px/1.55 Poppins,sans-serif;color:#C9D1CB">Set your start time once: the same time all week, or a different time each day. The reminder arrives right on time.</div>
+        </button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:48px;align-items:center;background:#111812;border:1px solid rgba(255,255,255,0.07);border-radius:32px;padding:clamp(24px,4vw,48px)">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <div style="font:600 13px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">Try it · interactive demo</div>
+          <div style="font:700 28px/1.2 Poppins,sans-serif">{{ demoTitle }}</div>
+          <sc-if value="{{ isShift }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button onClick="{{ setSame }}" style="cursor:pointer;font:600 15px Poppins,sans-serif;padding:10px 16px;border-radius:12px;border:1px solid {{ sameBorder }};background:{{ sameBg }};color:#F5F6F4">Same time every day</button>
+                <button onClick="{{ setDiff }}" style="cursor:pointer;font:600 15px Poppins,sans-serif;padding:10px 16px;border-radius:12px;border:1px solid {{ diffBorder }};background:{{ diffBg }};color:#F5F6F4">Different time each day</button>
+              </div>
+              <sc-if value="{{ isSame }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="font:500 14px Poppins,sans-serif;color:#A7B0A9">Shift starts at</div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ sameTimes }}" as="t" hint-placeholder-count="4">
+                      <button onClick="{{ t.pick }}" style="cursor:pointer;font:600 15px Poppins,sans-serif;padding:9px 14px;border-radius:10px;border:1px solid {{ t.border }};background:{{ t.bg }};color:#F5F6F4">{{ t.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ isDiff }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px">
+                  <sc-for list="{{ week }}" as="d" hint-placeholder-count="7">
+                    <button onClick="{{ d.pick }}" style="cursor:pointer;text-align:left;padding:10px 12px;border-radius:12px;border:1px solid {{ d.border }};background:{{ d.bg }};color:#F5F6F4;display:flex;flex-direction:column;gap:2px;font-family:Poppins,sans-serif">
+                      <span style="font:600 14px Poppins,sans-serif">{{ d.day }}</span><span style="font:500 13px Poppins,sans-serif;color:#34D399">{{ d.time }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+              <div style="display:flex;gap:14px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:{{ st.bg }};transition:background 0.3s">
+                <div style="width:30px;height:30px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font:700 14px Poppins,sans-serif;background:{{ st.dotBg }};color:{{ st.dotFg }}">{{ st.n }}</div>
+                <div style="display:flex;flex-direction:column;gap:2px"><div style="font:600 16px/1.35 Poppins,sans-serif;color:{{ st.color }}">{{ st.title }}</div><div style="font:400 14px/1.5 Poppins,sans-serif;color:#A7B0A9">{{ st.body }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <button onClick="{{ demoNext }}" style="cursor:pointer;background:#0E9F6E;color:#fff;border:0;font:700 16px Poppins,sans-serif;padding:14px 22px;border-radius:14px" style-hover="background:#12B47D">{{ demoAction }}</button>
+            <button onClick="{{ demoReset }}" style="cursor:pointer;background:none;color:#A7B0A9;border:1px solid rgba(255,255,255,0.14);font:600 15px Poppins,sans-serif;padding:13px 18px;border-radius:14px">Reset</button>
+          </div>
+          <div style="font:400 13px/1.5 Poppins,sans-serif;color:#7F8981">Demo only. Reminders are on Android. "My Car" is an example name.</div>
+        </div>
+
+        <div style="display:flex;justify-content:center;gap:28px;flex-wrap:wrap;align-items:center">
+          <div style="position:relative;width:300px;height:640px;border-radius:44px;overflow:hidden;background:#0F1712;box-shadow:0 0 0 9px #1B221C,0 40px 100px rgba(0,0,0,0.6);flex:none">
+            <div style="position:absolute;inset:0;opacity:{{ lockO }};transition:opacity 0.45s">
+              <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle, rgba(14,159,110,0.35), rgba(14,159,110,0) 62%);left:-150px;top:300px"></div>
+              <div style="position:absolute;left:0;right:0;top:86px;text-align:center;color:#fff;font:300 78px/1 Poppins,sans-serif;letter-spacing:-0.02em">{{ clock }}</div>
+              <div style="position:absolute;left:0;right:0;top:176px;text-align:center;color:rgba(255,255,255,0.8);font:500 15px Poppins,sans-serif">{{ dayStr }}</div>
+              <div style="position:absolute;left:0;right:0;bottom:44px;display:flex;justify-content:center"><div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);color:#E6FBF2;font:500 13px Poppins,sans-serif;padding:8px 14px;border-radius:999px"><div style="width:8px;height:8px;border-radius:50%;background:{{ statusDot }}"></div>{{ lockStatus }}</div></div>
+            </div>
+            <div style="position:absolute;inset:0;opacity:{{ appO }};transition:opacity 0.45s"><img src="assets/home-recording.jpg" alt="Recording a trip" style="width:100%;height:100%;display:block"></div>
+            <div onClick="{{ tapNotif }}" style="position:absolute;left:12px;right:12px;top:{{ notifTop }}px;opacity:{{ notifO }};transform:translateY({{ notifY }}px) scale({{ notifS }});transition:all 0.45s cubic-bezier(.2,.8,.2,1);cursor:pointer;background:rgba(250,250,248,0.98);border-radius:20px;padding:12px 14px;box-shadow:0 0 0 {{ notifRing }}px rgba(52,211,153,0.35),0 16px 40px rgba(0,0,0,0.5);color:#161B16;pointer-events:{{ notifPE }}">
+              <div style="display:flex;align-items:center;gap:8px"><img src="assets/app-icon.png" alt="" style="width:24px;height:24px;border-radius:6px"><div style="font:500 12px Poppins,sans-serif;color:#5E6760">TaxiTracker · now</div></div>
+              <div style="margin-top:6px;font:700 16px/1.2 Poppins,sans-serif">{{ notifTitle }}</div>
+              <div style="margin-top:2px;font:400 13px/1.35 Poppins,sans-serif;color:#2B332C">{{ notifBody }}</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+            <div style="width:200px;height:444px;border-radius:30px;overflow:hidden;box-shadow:0 0 0 6px #1B221C,0 24px 60px rgba(0,0,0,0.5)"><img src="assets/reminders-settings.jpg" alt="Start Trip Reminders settings in TaxiTracker" style="width:100%;height:100%;display:block"></div>
+            <div style="font:500 13px/1.4 Poppins,sans-serif;color:#A7B0A9;text-align:center;max-width:200px">The real settings screen. Set it up once.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" data-screen-label="How it works" style="padding:100px 24px;background:#0F1510;border-top:1px solid rgba(255,255,255,0.05)">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:44px">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:700px">
+        <div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">How it works</div>
+        <h2 style="margin:0;font:800 clamp(32px,4vw,50px)/1.06 Poppins,sans-serif;letter-spacing:-0.03em">Start. Drive. Stop. That's the whole logbook.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px">
+        <sc-for list="{{ how }}" as="h" hint-placeholder-count="3">
+          <div style="background:#141B15;border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:30px;display:flex;flex-direction:column;gap:14px">
+            <div style="font:800 46px/1 Poppins,sans-serif;color:#34D399;letter-spacing:-0.03em">{{ h.n }}</div>
+            <div style="font:700 23px/1.2 Poppins,sans-serif">{{ h.title }}</div>
+            <div style="font:400 16px/1.6 Poppins,sans-serif;color:#A7B0A9;text-wrap:pretty">{{ h.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" data-screen-label="Features" style="padding:100px 24px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:44px">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:760px">
+        <div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">Inside the app</div>
+        <h2 style="margin:0;font:800 clamp(32px,4vw,50px)/1.06 Poppins,sans-serif;letter-spacing:-0.03em">Everything a self-employed driver needs to keep records straight.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:18px">
+        <sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+          <div style="background:#141B15;border:1px solid rgba(255,255,255,0.07);border-radius:26px;overflow:hidden;display:flex;flex-direction:column" style-hover="border-color:rgba(52,211,153,0.4)">
+            <div style="height:270px;overflow:hidden;background:linear-gradient(160deg,#0E9F6E,#0A7A55);display:flex;justify-content:center;padding-top:30px">
+              <div style="width:230px;height:511px;border-radius:30px;overflow:hidden;box-shadow:0 0 0 5px #1B221C,0 20px 50px rgba(0,0,0,0.45);flex:none"><img src="{{ f.img }}" alt="{{ f.title }}" style="width:100%;height:100%;display:block"></div>
+            </div>
+            <div style="padding:26px;display:flex;flex-direction:column;gap:8px">
+              <div style="font:700 21px/1.25 Poppins,sans-serif">{{ f.title }}</div>
+              <div style="font:400 15px/1.6 Poppins,sans-serif;color:#A7B0A9;text-wrap:pretty">{{ f.body }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="report" data-screen-label="Excel report" style="padding:110px 24px;background:linear-gradient(180deg,#0F1510,#0B100C);border-top:1px solid rgba(255,255,255,0.05)">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:36px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:720px">
+          <div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">The Excel report</div>
+          <h2 style="margin:0;font:800 clamp(32px,4.4vw,56px)/1.04 Poppins,sans-serif;letter-spacing:-0.03em">Tax time, sorted in one tap.</h2>
+          <p style="margin:0;font:400 18px/1.6 Poppins,sans-serif;color:#C9D1CB;text-wrap:pretty">This is a real export from TaxiTracker (sample data). Click through all five sheets, or download it and open it in Excel.</p>
+        </div>
+        <button onClick="{{ downloadReport }}" style="cursor:pointer;display:flex;align-items:center;gap:12px;background:#F5F6F4;color:#0B100C;border:0;padding:14px 22px;border-radius:14px;font:700 16px Poppins,sans-serif" style-hover="background:#fff">
+          <span style="background:#1D7A4C;color:#fff;font:800 11px Poppins,sans-serif;letter-spacing:0.05em;padding:6px 8px;border-radius:7px">XLSX</span>Download sample report
+        </button>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ sheetTabs }}" as="t" hint-placeholder-count="5">
+          <button onClick="{{ t.pick }}" style="cursor:pointer;display:flex;align-items:center;gap:10px;font:600 15px Poppins,sans-serif;padding:11px 16px;border-radius:12px;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.color }};transition:all 0.2s">
+            <span style="width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font:700 12px Poppins,sans-serif;background:{{ t.numBg }};color:{{ t.numFg }}">{{ t.n }}</span>{{ t.name }}
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:18px;grid-column:span 1">
+          <div style="font:700 26px/1.2 Poppins,sans-serif">{{ sheet.name }}</div>
+          <div style="font:400 16px/1.6 Poppins,sans-serif;color:#C9D1CB;text-wrap:pretty">{{ sheet.blurb }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ sheet.stats }}" as="x" hint-placeholder-count="2">
+              <div style="background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.22);border-radius:16px;padding:14px 18px;display:flex;flex-direction:column;gap:4px;min-width:120px">
+                <div style="font:800 24px/1 Poppins,sans-serif;color:#fff">{{ x.v }}</div>
+                <div style="font:500 13px/1.2 Poppins,sans-serif;color:#A7B0A9">{{ x.l }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button onClick="{{ prevSheet }}" style="cursor:pointer;background:none;border:1px solid rgba(255,255,255,0.16);color:#F5F6F4;font:600 15px Poppins,sans-serif;padding:10px 16px;border-radius:12px">← Previous</button>
+            <button onClick="{{ nextSheet }}" style="cursor:pointer;background:#0E9F6E;border:0;color:#fff;font:600 15px Poppins,sans-serif;padding:10px 16px;border-radius:12px">Next sheet →</button>
+          </div>
+        </div>
+        <div style="grid-column:span 2;min-width:0;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.55);color:#1F2A24">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F3F4F2;border-bottom:1px solid #E1E5E2">
+            <div style="display:flex;gap:6px"><div style="width:11px;height:11px;border-radius:50%;background:#E2E5E2"></div><div style="width:11px;height:11px;border-radius:50%;background:#E2E5E2"></div><div style="width:11px;height:11px;border-radius:50%;background:#E2E5E2"></div></div>
+            <div style="font:600 14px Poppins,sans-serif;color:#3F4740;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">TaxiTracker_IRD_Export_2026-2027.xlsx</div>
+          </div>
+          <div style="overflow:auto;max-height:520px">
+            <div style="min-width:{{ sheet.minW }}px">
+              <div style="background:#141815;color:#fff;font:700 19px Arial,Helvetica,sans-serif;padding:16px 18px 4px">{{ sheet.title }}</div>
+              <div style="background:#141815;color:#A9B7AF;font:400 13px Arial,Helvetica,sans-serif;padding:0 18px 12px">{{ sheet.sub }}</div>
+              <div style="display:grid;grid-template-columns:{{ sheet.cols }};position:sticky;top:0;z-index:1">
+                <sc-for list="{{ sheet.head }}" as="c" hint-placeholder-count="6">
+                  <div style="padding:10px 12px;font:700 13px/1.25 Arial,Helvetica,sans-serif;background:#0E9F6E;color:#fff;text-align:{{ c.align }};border-right:1px solid rgba(255,255,255,0.15)">{{ c.v }}</div>
+                </sc-for>
+              </div>
+              <sc-for list="{{ sheet.rows }}" as="row" hint-placeholder-count="10">
+                <div style="display:grid;grid-template-columns:{{ row.cols }};border-bottom:1px solid #E6EAE7">
+                  <sc-for list="{{ row.cells }}" as="c" hint-placeholder-count="4">
+                    <div style="padding:9px 12px;font:{{ c.weight }} {{ c.size }}/1.35 Arial,Helvetica,sans-serif;background:{{ c.bg }};color:{{ c.color }};text-align:{{ c.align }};white-space:{{ c.ws }};overflow-wrap:{{ c.ow }};border-right:1px solid #EEF1EE;min-width:0">
+                      <span style="display:inline-block;padding:{{ c.pad }};border-radius:7px;background:{{ c.pillBg }};color:{{ c.pillFg }}">{{ c.v }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;gap:2px;padding:6px 8px;background:#EEF0EE;border-top:1px solid #D5DAD6;overflow-x:auto">
+            <sc-for list="{{ sheetTabs }}" as="t" hint-placeholder-count="5">
+              <button onClick="{{ t.pick }}" style="cursor:pointer;white-space:nowrap;border:0;padding:8px 12px;font:{{ t.xlWeight }} 13px Arial,Helvetica,sans-serif;background:{{ t.xlBg }};color:{{ t.xlColor }};border-bottom:3px solid {{ t.xlLine }}">{{ t.name }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nz" data-screen-label="How the claim is worked out" style="padding:100px 24px">
+    <div style="max-width:1200px;margin:0 auto;border-radius:32px;background:linear-gradient(140deg,#0E9F6E,#086A4A);padding:clamp(26px,4.5vw,56px);display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:760px">
+        <div style="font:600 14px Poppins,sans-serif;color:#D1FAE5;letter-spacing:0.14em;text-transform:uppercase">For New Zealand drivers</div>
+        <h2 style="margin:0;font:800 clamp(30px,3.8vw,48px)/1.06 Poppins,sans-serif;color:#fff;letter-spacing:-0.03em">See exactly how your estimated deductions add up.</h2>
+        <p style="margin:0;font:400 18px/1.6 Poppins,sans-serif;color:#ECFDF5;text-wrap:pretty">From the sample report above. Click each part to see the working.</p>
+      </div>
+      <div style="display:flex;height:22px;border-radius:999px;overflow:hidden;background:rgba(6,40,26,0.35)">
+        <sc-for list="{{ dedParts }}" as="d" hint-placeholder-count="4">
+          <div onClick="{{ d.pick }}" style="cursor:pointer;width:{{ d.pct }}%;background:{{ d.color }};opacity:{{ d.op }};transition:opacity 0.2s;border-right:2px solid #0B7F58"></div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ dedParts }}" as="d" hint-placeholder-count="4">
+            <button onClick="{{ d.pick }}" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;padding:16px 18px;border-radius:16px;border:2px solid {{ d.border }};background:{{ d.bg }};color:#fff;font-family:Poppins,sans-serif;transition:all 0.2s">
+              <span style="display:flex;align-items:center;gap:12px"><span style="width:14px;height:14px;border-radius:4px;background:{{ d.color }};flex:none"></span><span style="font:600 16px/1.3 Poppins,sans-serif">{{ d.label }}</span></span>
+              <span style="font:700 17px Poppins,sans-serif;white-space:nowrap">{{ d.amt }}</span>
+            </button>
+          </sc-for>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:16px 18px;border-radius:16px;background:#fff;color:#161B16">
+            <span style="font:700 16px Poppins,sans-serif">Total estimated deductions</span><span style="font:800 18px Poppins,sans-serif">$1,313.88</span>
+          </div>
+        </div>
+        <div style="background:rgba(6,30,20,0.38);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:16px;min-height:100%">
+          <div style="font:700 22px/1.25 Poppins,sans-serif;color:#fff">{{ ded.label }}</div>
+          <div style="font:700 clamp(20px,2.4vw,28px)/1.3 Poppins,sans-serif;color:#B8F5DA">{{ ded.formula }}</div>
+          <div style="font:400 16px/1.6 Poppins,sans-serif;color:#ECFDF5;text-wrap:pretty">{{ ded.note }}</div>
+        </div>
+      </div>
+      <div style="font:500 14px/1.6 Poppins,sans-serif;color:#D1FAE5">Estimates only, not tax advice. Check figures and the current IRD kilometre rate with your accountant or ird.govt.nz before filing. TaxiTracker is not affiliated with Inland Revenue.</div>
+    </div>
+  </section>
+
+  <section id="video" data-screen-label="Video" style="padding:30px 24px 100px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:56px;align-items:center">
+      <div style="display:flex;justify-content:center">
+        <sc-if value="{{ isYouTube }}" hint-placeholder-val="{{ false }}">
+          <iframe src="{{ ytSrc }}" title="TaxiTracker video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen="true" style="width:min(100%,340px);aspect-ratio:9/16;border:0;border-radius:32px;box-shadow:0 40px 100px rgba(0,0,0,0.55);background:#000"></iframe>
+        </sc-if>
+        <sc-if value="{{ isFile }}" hint-placeholder-val="{{ true }}">
+          <div style="width:min(100%,340px);aspect-ratio:720/1280;border-radius:32px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.55);background:#0E9F6E">
+            <video src="{{ videoSrc }}" controls="true" playsInline="true" preload="metadata" style="width:100%;height:100%;display:block;object-fit:contain"></video>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">Watch the 50-second tour</div>
+        <h2 style="margin:0;font:800 clamp(32px,4vw,50px)/1.06 Poppins,sans-serif;letter-spacing:-0.03em">From Start Trip to tax report.</h2>
+        <p style="margin:0;font:400 18px/1.65 Poppins,sans-serif;color:#C9D1CB;text-wrap:pretty">The reminder pops up, one tap and the trip is recording. Then the fare, your trips, earnings, expenses with receipts, and the Excel workbook your accountant receives.</p>
+        <a href="https://play.google.com/store/apps/details?id=com.rukappsl.taxitracker" target="_blank" rel="noopener" style="align-self:flex-start;display:block;line-height:0"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" style="height:80px;margin:-12px"></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" data-screen-label="Pricing" style="padding:100px 24px;background:#0F1510;border-top:1px solid rgba(255,255,255,0.05)">
+    <div style="max-width:1000px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:34px;text-align:center">
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:center">
+        <div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">Pricing</div>
+        <h2 style="margin:0;font:800 clamp(32px,4vw,50px)/1.06 Poppins,sans-serif;letter-spacing:-0.03em">Try it free for 7 days.</h2>
+        <p style="margin:0;font:400 18px/1.6 Poppins,sans-serif;color:#C9D1CB;max-width:620px">Then a monthly or yearly subscription through Google Play. Cancel any time in Google Play.</p>
+      </div>
+      <div style="display:flex;gap:4px;background:#141B15;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:4px">
+        <button onClick="{{ setNZ }}" style="cursor:pointer;border:0;font:600 15px Poppins,sans-serif;padding:10px 18px;border-radius:10px;background:{{ nzBg }};color:{{ nzFg }}">New Zealand</button>
+        <button onClick="{{ setOther }}" style="cursor:pointer;border:0;font:600 15px Poppins,sans-serif;padding:10px 18px;border-radius:10px;background:{{ otBg }};color:{{ otFg }}">Other countries</button>
+      </div>
+      <sc-if value="{{ isNZ }}" hint-placeholder-val="{{ true }}">
+        <div style="width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px;text-align:left">
+          <div style="background:#141B15;border:1px solid rgba(255,255,255,0.08);border-radius:26px;padding:32px;display:flex;flex-direction:column;gap:12px">
+            <div style="font:600 16px Poppins,sans-serif;color:#A7B0A9">Monthly</div>
+            <div style="display:flex;align-items:baseline;gap:6px"><div style="font:800 46px/1 Poppins,sans-serif;color:#fff">NZ$6.99</div><div style="font:500 16px Poppins,sans-serif;color:#A7B0A9">/ month</div></div>
+            <div style="font:400 15px/1.5 Poppins,sans-serif;color:#A7B0A9">After your 7-day free trial.</div>
+          </div>
+          <div style="position:relative;background:#141B15;border:2px solid #0E9F6E;border-radius:26px;padding:32px;display:flex;flex-direction:column;gap:12px">
+            <div style="position:absolute;top:-14px;right:24px;background:#0E9F6E;color:#fff;font:700 13px Poppins,sans-serif;padding:6px 12px;border-radius:999px">Best value</div>
+            <div style="font:600 16px Poppins,sans-serif;color:#A7B0A9">Yearly</div>
+            <div style="display:flex;align-items:baseline;gap:6px"><div style="font:800 46px/1 Poppins,sans-serif;color:#fff">NZ$64.99</div><div style="font:500 16px Poppins,sans-serif;color:#A7B0A9">/ year</div></div>
+            <div style="font:400 15px/1.5 Poppins,sans-serif;color:#A7B0A9">About NZ$5.42 a month, after your 7-day free trial.</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isOther }}" hint-placeholder-val="{{ false }}">
+        <div style="width:100%;max-width:640px;background:#141B15;border:1px solid rgba(255,255,255,0.08);border-radius:26px;padding:32px;display:flex;flex-direction:column;gap:12px;align-items:center">
+          <div style="font:800 34px/1.1 Poppins,sans-serif;color:#fff">7-day free trial</div>
+          <div style="font:400 16px/1.6 Poppins,sans-serif;color:#C9D1CB">Then monthly or yearly. Prices differ by country, and Google Play shows yours in your local currency before you subscribe.</div>
+        </div>
+      </sc-if>
+      <a href="https://play.google.com/store/apps/details?id=com.rukappsl.taxitracker" target="_blank" rel="noopener" style="display:block;line-height:0"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" style="height:86px;margin:-13px"></a>
+    </div>
+  </section>
+
+  <section id="apps" data-screen-label="Apps by RUKAPPSL" style="padding:100px 24px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:40px">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:720px">
+        <div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">Apps by RUKAPPSL</div>
+        <h2 style="margin:0;font:800 clamp(32px,4vw,50px)/1.06 Poppins,sans-serif;letter-spacing:-0.03em">Practical apps for people who work for themselves.</h2>
+        <p style="margin:0;font:400 18px/1.6 Poppins,sans-serif;color:#C9D1CB">TaxiTracker is our first. More are on the way.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px">
+        <a href="https://play.google.com/store/apps/details?id=com.rukappsl.taxitracker" target="_blank" rel="noopener" style="grid-column:span 2;min-width:0;background:linear-gradient(140deg,#13261A,#0F1510);border:1px solid rgba(52,211,153,0.35);border-radius:26px;padding:30px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;color:#F5F6F4" style-hover="border-color:#34D399;color:#F5F6F4">
+          <img src="assets/app-icon.png" alt="" style="width:96px;height:96px;border-radius:24px;flex:none">
+          <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><div style="font:800 26px/1.1 Poppins,sans-serif">TaxiTracker – Driver Logbook</div><div style="display:flex;align-items:center;gap:7px;background:rgba(52,211,153,0.14);color:#6EE7B7;font:700 12px Poppins,sans-serif;padding:5px 10px;border-radius:999px"><div style="width:7px;height:7px;border-radius:50%;background:#34D399;animation:ttpulse 2s infinite"></div>LIVE</div></div>
+            <div style="font:400 15px/1.55 Poppins,sans-serif;color:#C9D1CB">GPS logbook for taxi and rideshare drivers, with Start Trip reminders and a tax-ready Excel report.</div>
+            <div style="font:600 15px Poppins,sans-serif;color:#34D399">Open on Google Play →</div>
+          </div>
+        </a>
+        <div style="background:#111812;border:1.5px dashed rgba(255,255,255,0.16);border-radius:26px;padding:30px;display:flex;flex-direction:column;gap:12px;justify-content:center">
+          <div style="width:56px;height:56px;border-radius:16px;border:1.5px dashed rgba(52,211,153,0.5);display:flex;align-items:center;justify-content:center;color:#34D399;font:500 30px/1 Poppins,sans-serif">+</div>
+          <div style="font:700 20px/1.2 Poppins,sans-serif">Next app · in development</div>
+          <div style="font:400 15px/1.55 Poppins,sans-serif;color:#A7B0A9">Want to hear when it launches, or have an idea for an app that would help your work?</div>
+          <a href="mailto:rukappsl@gmail.com?subject=Tell%20me%20about%20new%20RUKAPPSL%20apps" style="font:600 15px Poppins,sans-serif;color:#34D399">Email us →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" data-screen-label="FAQ" style="padding:100px 24px;background:#0F1510;border-top:1px solid rgba(255,255,255,0.05)">
+    <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">FAQ</div>
+        <h2 style="margin:0;font:800 clamp(32px,4vw,50px)/1.06 Poppins,sans-serif;letter-spacing:-0.03em">Questions drivers ask</h2>
+      </div>
+      <input value="{{ faqQuery }}" onChange="{{ onFaqSearch }}" placeholder="Search questions, e.g. Bluetooth, GST, kilometre rate" style="width:100%;background:#141B15;border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:16px 18px;color:#F5F6F4;font:500 16px Poppins,sans-serif;outline:none">
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ faqCats }}" as="c" hint-placeholder-count="6">
+          <button onClick="{{ c.pick }}" style="cursor:pointer;font:600 14px Poppins,sans-serif;padding:9px 14px;border-radius:999px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }}">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="6">
+          <div style="background:#141B15;border:1px solid {{ q.border }};border-radius:18px;overflow:hidden;transition:border-color 0.2s">
+            <button onClick="{{ q.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 24px;background:none;border:0;color:#F5F6F4;font:600 17px/1.4 Poppins,sans-serif;text-align:left;cursor:pointer">
+              <span style="display:flex;flex-direction:column;gap:4px"><span style="font:600 12px Poppins,sans-serif;color:#34D399;letter-spacing:0.08em;text-transform:uppercase">{{ q.cat }}</span><span>{{ q.q }}</span></span>
+              <span style="color:#34D399;font:500 26px Poppins,sans-serif;flex:none">{{ q.sign }}</span>
+            </button>
+            <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 24px 22px;font:400 16px/1.7 Poppins,sans-serif;color:#C9D1CB;text-wrap:pretty;white-space:pre-line">{{ q.a }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{ noFaq }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:24px;border-radius:18px;background:#141B15;color:#A7B0A9;font:400 16px/1.6 Poppins,sans-serif">No questions match that. Email us at <a href="mailto:rukappsl@gmail.com">rukappsl@gmail.com</a> and we'll help.</div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <section id="support" data-screen-label="Support" style="padding:100px 24px 60px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px">
+      <div style="background:#141B15;border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:34px;display:flex;flex-direction:column;gap:14px">
+        <div style="font:700 25px Poppins,sans-serif">Need help?</div>
+        <div style="font:400 16px/1.6 Poppins,sans-serif;color:#A7B0A9">Questions, problems or ideas for the app. We read every message.</div>
+        <a href="mailto:rukappsl@gmail.com" style="align-self:flex-start;background:#0E9F6E;color:#fff;font:600 16px Poppins,sans-serif;padding:12px 18px;border-radius:12px" style-hover="background:#12B47D;color:#fff">rukappsl@gmail.com</a>
+      </div>
+      <div style="background:#141B15;border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:34px;display:flex;flex-direction:column;gap:14px">
+        <div style="font:700 25px Poppins,sans-serif">Your data</div>
+        <div style="font:400 16px/1.6 Poppins,sans-serif;color:#A7B0A9">Read how TaxiTracker handles your information, or ask for your account and data to be deleted.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <a href="/privacy-policy" style="border:1px solid rgba(255,255,255,0.16);color:#F5F6F4;font:600 15px Poppins,sans-serif;padding:11px 16px;border-radius:12px" style-hover="border-color:#34D399;color:#fff">Privacy policy</a>
+          <a href="/delete-account" style="border:1px solid rgba(255,255,255,0.16);color:#F5F6F4;font:600 15px Poppins,sans-serif;padding:11px 16px;border-radius:12px" style-hover="border-color:#34D399;color:#fff">Delete account</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Final CTA" style="padding:60px 24px 110px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px">
+      <img src="assets/app-icon.png" alt="" style="width:92px;height:92px;border-radius:24px;box-shadow:0 20px 60px rgba(14,159,110,0.45)">
+      <h2 style="margin:0;font:800 clamp(36px,5vw,64px)/1.02 Poppins,sans-serif;letter-spacing:-0.03em;text-wrap:balance">Start your first trip today.</h2>
+      <div style="font:400 18px Poppins,sans-serif;color:#C9D1CB">7-day free trial on Google Play.</div>
+      <a href="https://play.google.com/store/apps/details?id=com.rukappsl.taxitracker" target="_blank" rel="noopener" style="display:block;line-height:0;margin-top:6px"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" style="height:92px;margin:-14px"></a>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(255,255,255,0.07);padding:40px 24px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;gap:8px;max-width:520px">
+        <div style="font:800 18px Poppins,sans-serif;letter-spacing:0.04em">RUKAPPSL</div>
+        <div style="font:400 14px/1.6 Poppins,sans-serif;color:#7F8981">TaxiTracker is available on Android through Google Play. TaxiTracker is not affiliated with Inland Revenue. Deduction figures are estimates, not tax advice.</div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:22px;font:500 14px Poppins,sans-serif">
+        <a href="/privacy-policy" style="color:#A7B0A9">Privacy policy</a>
+        <a href="/delete-account" style="color:#A7B0A9">Delete account</a>
+        <a href="mailto:rukappsl@gmail.com" style="color:#A7B0A9">rukappsl@gmail.com</a>
+        <div style="color:#7F8981">© 2026 RUKAPPSL</div>
+      </div>
+    </div>
   </footer>
-</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;videoUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Video&quot;,&quot;description&quot;:&quot;Paste a YouTube link or an .mp4 address to replace the app footage&quot;}}">
+class Component extends DCLogic {
+  static FEATS = [
+    { title: 'Your week at a glance', body: 'Kilometres this week and an estimate of what\u2019s claimable so far, right on the home screen.' },
+    { title: 'Every trip in one list', body: 'Distance, time and fare for each trip, marked business or personal.' },
+    { title: 'Earnings, km and trips', body: 'Simple charts show what you earned and how far you drove.' },
+    { title: 'Expenses with receipt photos', body: 'Fuel, WOF, insurance and more. Snap a photo of the receipt as you go.' },
+    { title: 'Excel export in one tap', body: 'A tax-ready workbook for your accountant, for the whole tax year.' },
+    { title: '120+ countries', body: 'Your local currency, in kilometres or miles.' },
+  ];
+  state = { hero: true, mode: 'bt', bt: 0, sh: 0, shMode: 'same', shTime: 1, shDay: 0, sheet: 0, ded: 0, region: 'nz', cat: 'All', q: '', open: 0 };
+  componentDidMount() {
+    this._hero = setInterval(() => this.setState((s) => ({ hero: !s.hero })), 3200);
+    if (!window.TT_REPORT) this._poll = setInterval(() => { if (window.TT_REPORT) { clearInterval(this._poll); this.forceUpdate(); } }, 200);
+  }
+  componentWillUnmount() { clearInterval(this._hero); clearInterval(this._poll); }
+  download() {
+    const b64 = window.TT_REPORT_XLSX; if (!b64) return;
+    const bin = atob(b64); const u = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+    const url = URL.createObjectURL(new Blob([u], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+    const a = document.createElement('a'); a.href = url; a.download = 'TaxiTracker-sample-report.xlsx';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+  renderVals() {
+    const st = this.state, set = (o) => () => this.setState(o);
+    const GREEN = '#0E9F6E';
+    const isShift = st.mode === 'shift';
+    const sameTimes = ['6:00 am', '7:00 am', '8:00 am', '5:00 pm'];
+    const week = [['Mon', '7:00 am'], ['Tue', '7:00 am'], ['Wed', '6:30 am'], ['Thu', '7:00 am'], ['Fri', '7:00 am'], ['Sat', '9:00 am'], ['Sun', '10:00 am']];
+    const dayNames = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' };
+    const shiftTime = st.shMode === 'same' ? sameTimes[st.shTime] : week[st.shDay][1];
+    const minus1 = (t) => { const [hm, ap] = t.split(' '); let [h, m] = hm.split(':').map(Number); m -= 1; if (m < 0) { m = 59; h = h === 1 ? 12 : h - 1; } return `${h}:${String(m).padStart(2, '0')}`; };
+    const clean = (t) => t.split(' ')[0];
+
+    let screen = 'lock', notif = null, clock = '6:58', dayStr = 'Monday', lockStatus = 'Bluetooth · not connected', statusDot = '#7F8981', action = '', steps;
+    if (!isShift) {
+      const b = st.bt;
+      if (b === 1) { notif = 'start'; lockStatus = 'Connected to My Car'; statusDot = '#34D399'; clock = '6:59'; }
+      if (b >= 2) screen = 'app';
+      if (b === 3) notif = 'still';
+      action = ['Get in the car', 'Tap the reminder', 'Leave the car', 'Start again'][b];
+      steps = [
+        ['Get in the car', 'Your phone connects to your car\u2019s Bluetooth.'],
+        ['A reminder pops up', '\u201cStart a trip? Connected to My Car \u2014 tap to record\u201d'],
+        ['Tap once, you\u2019re recording', 'The app opens with the trip already recording.'],
+        ['Leave the car mid-trip?', 'If a trip is still recording, you\u2019ll see \u201cStill driving?\u201d'],
+      ].map(([t, bd], i) => ({ n: String(i + 1), title: t, body: bd, active: i === b }));
+    } else {
+      const s = st.sh;
+      dayStr = st.shMode === 'same' ? 'Monday' : dayNames[week[st.shDay][0]];
+      lockStatus = `Shift reminder · ${shiftTime}`; statusDot = '#34D399';
+      clock = s === 0 ? minus1(shiftTime) : clean(shiftTime);
+      if (s === 1) notif = 'shift';
+      if (s === 2) screen = 'app';
+      action = ['Skip to shift start', 'Tap the reminder', 'Start again'][s];
+      steps = [
+        ['Set your shift time', st.shMode === 'same' ? 'The same time every day.' : 'A different time for each day of the week.'],
+        ['A reminder arrives on time', `At ${shiftTime}, TaxiTracker asks if you want to start a trip.`],
+        ['Tap once, you\u2019re recording', 'The app opens with the trip already recording.'],
+      ].map(([t, bd], i) => ({ n: String(i + 1), title: t, body: bd, active: i === s }));
+    }
+    steps = steps.map((x) => ({ ...x, bg: x.active ? 'rgba(52,211,153,0.10)' : 'transparent', dotBg: x.active ? GREEN : 'rgba(255,255,255,0.08)', dotFg: x.active ? '#fff' : '#A7B0A9', color: x.active ? '#fff' : '#C9D1CB' }));
+    const notifs = {
+      start: ['Start a trip?', 'Connected to My Car \u2014 tap to record'],
+      shift: ['Start a trip?', `Your shift starts at ${shiftTime} \u2014 tap to record`],
+      still: ['Still driving?', 'A trip is still recording.'],
+    };
+    const nOn = !!notif, nt = notifs[notif || 'start'];
+    const demoNext = () => {
+      if (!isShift) this.setState((s) => ({ bt: (s.bt + 1) % 4 }));
+      else this.setState((s) => ({ sh: (s.sh + 1) % 3 }));
+    };
+    const tapNotif = () => { if (!isShift && st.bt === 1) this.setState({ bt: 2 }); else if (!isShift && st.bt === 3) this.setState({ bt: 2 }); else if (isShift && st.sh === 1) this.setState({ sh: 2 }); };
+
+    const R = window.TT_REPORT || [];
+    const si = Math.min(st.sheet, Math.max(0, R.length - 1));
+    const raw = R[si] || { name: '', title: '', sub: '', cols: '1fr', minW: 400, head: [], rows: [], blurb: '', stats: [] };
+    const fix = (c) => ({ ...c, ws: c.wrap === 'nowrap' ? 'nowrap' : 'normal', ow: c.wrap === 'anywhere' ? 'anywhere' : 'normal' });
+    const sheet = { ...raw, head: raw.head.map(fix), stats: raw.stats.map(([v, l]) => ({ v, l })), rows: raw.rows.map((r) => ({ cols: r.note ? '1fr' : raw.cols, cells: (r.note ? r.cells.slice(0, 1) : r.cells).map(fix) })) };
+    const sheetTabs = R.map((s, i) => {
+      const on = i === si;
+      return { n: String(i + 1), name: s.name, pick: set({ sheet: i }), bg: on ? '#F5F6F4' : 'transparent', color: on ? '#0B100C' : '#C9D1CB', border: on ? '#F5F6F4' : 'rgba(255,255,255,0.14)', numBg: on ? GREEN : 'rgba(255,255,255,0.08)', numFg: on ? '#fff' : '#A7B0A9',
+        xlBg: on ? '#fff' : 'transparent', xlColor: on ? GREEN : '#5E6760', xlWeight: on ? '700' : '500', xlLine: on ? GREEN : 'transparent' };
+    });
+
+    const dedData = [
+      { label: 'Vehicle (IRD kilometre rate)', amt: '$717.28', v: 717.28, color: '#FFFFFF', formula: '597.73 business km \u00d7 $1.20 per km = $717.28', note: 'Only business trips count. Personal trips are left out. The rate covers running costs such as fuel and WOF/registration, so those expenses are recorded but not added again. This sample uses IRD\u2019s 2025\u20132026 rates: $1.20/km for the first 14,000 km, $0.37/km after that.' },
+      { label: 'Other running costs', amt: '$526.00', v: 526, color: '#B8F5DA', formula: 'ACC levy $486 + bank fees $5 + accounting app $35 = $526', note: 'Costs the report treats as fully deductible running costs are added in full.' },
+      { label: 'Mobile phone (80% business)', amt: '$52.00', v: 52, color: '#E8A33D', formula: '$65 \u00d7 80% business use = $52', note: 'Only the business share of your phone costs is counted.' },
+      { label: 'Home office (10% apportioned)', amt: '$18.60', v: 18.6, color: '#6EE7B7', formula: '$186 \u00d7 10% = $18.60', note: 'Rent and power are apportioned, so only the business share is counted.' },
+    ];
+    const dedParts = dedData.map((d, i) => ({ ...d, pct: ((d.v / 1313.88) * 100).toFixed(2), pick: set({ ded: i }), op: st.ded === i ? 1 : 0.55, bg: st.ded === i ? 'rgba(6,30,20,0.45)' : 'rgba(6,30,20,0.18)', border: st.ded === i ? '#fff' : 'transparent' }));
+
+    const FAQ = [
+      ['Getting started', 'What is TaxiTracker?', 'A logbook app for taxi and rideshare drivers. Start a trip, drive, end it. GPS measures the distance, you add the fare, and your expenses, receipt photos, stats and an Excel report for your accountant are all in the same app.'],
+      ['Getting started', 'Is it on iPhone?', 'Not yet. TaxiTracker is on Android, through Google Play.'],
+      ['Getting started', 'How much does it cost?', 'It starts with a 7-day free trial, then a monthly or yearly subscription. In New Zealand it\u2019s NZ$6.99 a month or NZ$64.99 a year. Prices differ by country, and Google Play shows yours before you subscribe.'],
+      ['Getting started', 'Does it work offline and outside New Zealand?', 'Yes. It works offline, in 120+ countries, in your local currency, with kilometres or miles.'],
+      ['Trips & GPS', 'How does it measure my distance?', 'By GPS, from the moment you start a trip until you end it. Time parked or waiting at a rank isn\u2019t counted.'],
+      ['Trips & GPS', 'Do I have to stop after every fare?', 'No. Record trip by trip and add each fare, or run one trip for your whole shift. Whatever suits how you work.'],
+      ['Trips & GPS', 'Can I mark trips as business or personal?', 'Yes. Only business trips count toward the vehicle claim in the report.'],
+      ['Reminders', 'How do the Start Trip reminders work?', 'Two ways, and you can use both:\n\u2022 Bluetooth: when your phone connects to your car\u2019s Bluetooth, you get \u201cStart a trip? Connected to My Car \u2014 tap to record\u201d.\n\u2022 Shift time: set when your shift starts, either the same time all week or a different time each day.\nOne tap on the reminder and the trip is recording.'],
+      ['Reminders', 'Does it start recording automatically?', 'No. It\u2019s a reminder you tap, so nothing is recorded unless you choose to.'],
+      ['Reminders', 'What is \u201cStill driving?\u201d', 'If a trip is still recording when you leave the car, TaxiTracker asks \u201cStill driving?\u201d so you don\u2019t log kilometres you didn\u2019t drive.'],
+      ['Reminders', 'Are reminders on every phone?', 'Reminders are on Android, like the rest of TaxiTracker.'],
+      ['Expenses & tax', 'How does TaxiTracker work out my claimable vehicle expenses?', 'For New Zealand drivers it uses the IRD kilometre rate method: your business kilometres multiplied by IRD\u2019s rate per km. In the sample report that\u2019s 597.73 business km \u00d7 $1.20 = $717.28. The report shows which year\u2019s IRD rates were used and links to IRD so you can check the current rate.'],
+      ['Expenses & tax', 'Why aren\u2019t fuel and WOF in my deductions total?', 'Under the kilometre rate method, the rate per km already covers running costs such as fuel and WOF/registration. TaxiTracker still records them, but doesn\u2019t add them again.'],
+      ['Expenses & tax', 'How are my phone and home office worked out?', 'Only the business share is counted. In the sample report, the phone is counted at 80% business use ($65 \u2192 $52) and the home office at 10% ($186 \u2192 $18.60).'],
+      ['Expenses & tax', 'How is the total estimated deduction calculated?', 'Vehicle claim + other running costs + the business share of your phone + the business share of your home office. In the sample: $717.28 + $526 + $52 + $18.60 = $1,313.88.'],
+      ['Expenses & tax', 'What does \u201cclaimable so far\u201d on the home screen mean?', 'It\u2019s a running estimate based on the trips and expenses you\u2019ve logged so far this tax year.'],
+      ['Expenses & tax', 'Does TaxiTracker file my tax return?', 'No. It gives you estimated deductions and a tax-year report (1 April \u2013 31 March) to take to your accountant, or to use when you file. The figures are estimates, not tax advice. TaxiTracker is not affiliated with Inland Revenue.'],
+      ['Expenses & tax', 'Can I save receipts?', 'Yes. Snap a photo of the receipt when you add an expense. The report shows which expenses have a receipt photo and whether they include GST.'],
+      ['The report', 'What\u2019s in the Excel report?', 'Five sheets: Trip Log, Expense Summary, Expense Detail, Vehicle Expense Calc and Deduction Summary. You can see a real one on this page and download it.'],
+      ['The report', 'I\u2019m not in New Zealand. Is the report still useful?', 'Yes. You can export your trips and expenses to Excel in your local currency. The IRD deduction estimates are for New Zealand drivers.'],
+      ['Account', 'How do I delete my account and data?', 'Use the Delete account page linked at the bottom of this page. The privacy policy explains what is stored and why.'],
+    ];
+    const cats = ['All', 'Getting started', 'Trips & GPS', 'Reminders', 'Expenses & tax', 'The report', 'Account'];
+    const ql = st.q.trim().toLowerCase();
+    const list = FAQ.map(([cat, q, a], i) => ({ i, cat, q, a })).filter((f) => (st.cat === 'All' || f.cat === st.cat) && (!ql || (f.q + ' ' + f.a).toLowerCase().includes(ql)));
+    const faqs = list.map((f) => { const open = st.open === f.i || (!!ql && list.length <= 3); return { ...f, open, sign: open ? '\u2212' : '+', border: open ? 'rgba(52,211,153,0.4)' : 'rgba(255,255,255,0.07)', toggle: () => this.setState({ open: st.open === f.i ? -1 : f.i }) }; });
+
+    const vurl = (this.props.videoUrl || '').trim();
+    const yt = vurl.match(/(?:youtu\.be\/|v=|shorts\/)([\w-]{6,})/);
+
+    return {
+      heroNoteO: st.hero ? 1 : 0, heroNoteY: st.hero ? 0 : -24,
+      facts: ['Live on Google Play', 'Start Trip reminders', 'Works offline', '120+ countries · local currency', 'Kilometres or miles', 'Tax-ready Excel report'],
+      pickBt: set({ mode: 'bt', bt: 0 }), pickShift: set({ mode: 'shift', sh: 0 }),
+      btTabBg: isShift ? '#111812' : 'rgba(14,159,110,0.14)', btTabBorder: isShift ? 'rgba(255,255,255,0.08)' : GREEN,
+      shTabBg: isShift ? 'rgba(14,159,110,0.14)' : '#111812', shTabBorder: isShift ? GREEN : 'rgba(255,255,255,0.08)',
+      isShift, demoTitle: isShift ? 'Method 2: your shift start time' : 'Method 1: your car\u2019s Bluetooth',
+      setSame: set({ shMode: 'same', sh: 0 }), setDiff: set({ shMode: 'diff', sh: 0 }),
+      isSame: st.shMode === 'same', isDiff: st.shMode === 'diff',
+      sameBg: st.shMode === 'same' ? 'rgba(14,159,110,0.25)' : 'transparent', sameBorder: st.shMode === 'same' ? GREEN : 'rgba(255,255,255,0.14)',
+      diffBg: st.shMode === 'diff' ? 'rgba(14,159,110,0.25)' : 'transparent', diffBorder: st.shMode === 'diff' ? GREEN : 'rgba(255,255,255,0.14)',
+      sameTimes: sameTimes.map((t, i) => ({ label: t, pick: set({ shTime: i, sh: 0 }), bg: st.shTime === i ? GREEN : 'transparent', border: st.shTime === i ? GREEN : 'rgba(255,255,255,0.14)' })),
+      week: week.map(([d, t], i) => ({ day: d, time: t, pick: set({ shDay: i, sh: 0 }), bg: st.shDay === i ? 'rgba(14,159,110,0.25)' : 'transparent', border: st.shDay === i ? GREEN : 'rgba(255,255,255,0.12)' })),
+      steps, demoAction: action, demoNext, demoReset: set({ bt: 0, sh: 0 }),
+      lockO: screen === 'lock' ? 1 : 0, appO: screen === 'app' ? 1 : 0,
+      clock, dayStr, lockStatus, statusDot,
+      notifO: nOn ? 1 : 0, notifY: nOn ? 0 : -30, notifS: nOn ? 1 : 0.96, notifTop: screen === 'app' ? 64 : 236, notifRing: nOn ? 5 : 0, notifPE: nOn ? 'auto' : 'none',
+      notifTitle: nt[0], notifBody: nt[1], tapNotif,
+      how: [
+        { n: '01', title: 'Tap Start Trip', body: 'Or tap the reminder when you get in the car or your shift starts.' },
+        { n: '02', title: 'Drive as normal', body: 'GPS counts every kilometre. Time parked or waiting at a rank isn\u2019t counted. Works offline.' },
+        { n: '03', title: 'End it, add the fare', body: 'Mark the trip business or personal. Record trip by trip, or your whole shift.' },
+      ],
+      features: [
+        ['fHome', 'assets/home-start.jpg'], ['fTrips', 'social/trips.jpg'], ['fCharts', 'social/charts.jpg'],
+        ['fExpense', 'social/expense-form.jpg'], ['fReports', 'social/reports.jpg'], ['fCountry', 'social/country.jpg'],
+      ].map(([id, p]) => (window.__resources && window.__resources[id]) || p).map((img, i) => ({ ...this.constructor.FEATS[i], img })),
+      sheet, sheetTabs, downloadReport: () => this.download(),
+      prevSheet: () => this.setState((s) => ({ sheet: (s.sheet + R.length - 1) % Math.max(1, R.length) })),
+      nextSheet: () => this.setState((s) => ({ sheet: (s.sheet + 1) % Math.max(1, R.length) })),
+      dedParts, ded: dedData[st.ded],
+      isYouTube: !!yt, ytSrc: yt ? `https://www.youtube.com/embed/${yt[1]}` : '', isFile: !yt, videoSrc: yt ? '' : (vurl || 'assets/taxitracker-promo.mp4'),
+      setNZ: set({ region: 'nz' }), setOther: set({ region: 'other' }), isNZ: st.region === 'nz', isOther: st.region !== 'nz',
+      nzBg: st.region === 'nz' ? GREEN : 'transparent', nzFg: st.region === 'nz' ? '#fff' : '#C9D1CB', otBg: st.region !== 'nz' ? GREEN : 'transparent', otFg: st.region !== 'nz' ? '#fff' : '#C9D1CB',
+      faqQuery: st.q, onFaqSearch: (e) => this.setState({ q: e.target.value }),
+      faqCats: cats.map((c) => ({ label: c, pick: set({ cat: c }), bg: st.cat === c ? GREEN : 'transparent', color: st.cat === c ? '#fff' : '#C9D1CB', border: st.cat === c ? GREEN : 'rgba(255,255,255,0.14)' })),
+      faqs, noFaq: faqs.length === 0,
+    };
+  }
+}
+</script>
 </body>
 </html>
