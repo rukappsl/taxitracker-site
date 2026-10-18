@@ -365,6 +365,28 @@
     </div>
   </section>
 
+  <section id="tiktok" data-screen-label="As seen on TikTok" style="padding:20px 24px 100px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:56px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="font:600 14px Poppins,sans-serif;color:#34D399;letter-spacing:0.14em;text-transform:uppercase">As seen on TikTok</div>
+        <h2 style="margin:0;font:800 clamp(32px,4vw,50px)/1.06 Poppins,sans-serif;letter-spacing:-0.03em">Drivers are talking about TaxiTracker.</h2>
+        <p style="margin:0;font:400 18px/1.65 Poppins,sans-serif;color:#C9D1CB;text-wrap:pretty">Fayaz introduces TaxiTracker to the Sri Lankan community in New Zealand. Thank you, Fayaz!</p>
+        <a href="https://www.tiktok.com/@fayazamanullah/video/7697415247820360978" target="_blank" rel="noopener" style="align-self:flex-start;display:flex;align-items:center;gap:10px;color:#F5F6F4;font:600 16px Poppins,sans-serif;padding:12px 18px;border-radius:14px;border:1px solid rgba(255,255,255,0.16)" style-hover="border-color:#34D399;color:#F5F6F4">Watch on TikTok · @fayazamanullah <span style="color:#34D399">↗</span></a>
+      </div>
+      <div style="display:flex;justify-content:center">
+        <sc-if value="{{ ttOff }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ playTikTok }}" aria-label="Play the TikTok video by @fayazamanullah" style="cursor:pointer;position:relative;width:min(100%,340px);aspect-ratio:9/16;border:0;border-radius:32px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.55);background:linear-gradient(160deg,#0E9F6E 0%,#0B3D2B 55%,#0B100C 100%);color:#fff;text-align:left;padding:0;font-family:Poppins,sans-serif">
+            <div style="position:absolute;top:22px;left:22px;display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;font:800 18px Poppins,sans-serif;color:#fff;box-shadow:-2px -2px 0 #25F4EE,2px 2px 0 #FE2C55">♪</div><div style="font:600 15px Poppins,sans-serif">@fayazamanullah</div></div>
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(0,0,0,0.45)"><div style="width:0;height:0;border-top:16px solid transparent;border-bottom:16px solid transparent;border-left:26px solid #0E9F6E;margin-left:6px"></div></div>
+            <div style="position:absolute;left:22px;right:22px;bottom:24px;display:flex;flex-direction:column;gap:8px"><div style="font:600 16px/1.45 Poppins,sans-serif">Here we introduce Taxi Tracker app developed by our own Sri Lankan</div><div style="font:400 12px Poppins,sans-serif;color:rgba(255,255,255,0.7)">Tap to play · the video loads from TikTok</div></div>
+          </button>
+        </sc-if>
+        <sc-if value="{{ ttOn }}" hint-placeholder-val="{{ false }}">
+          <iframe src="https://www.tiktok.com/player/v1/7697415247820360978?description=1&amp;music_info=1&amp;rel=0" title="TikTok video by @fayazamanullah" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen="true" style="width:min(100%,340px);aspect-ratio:9/16;border:0;border-radius:32px;box-shadow:0 40px 100px rgba(0,0,0,0.55);background:#000"></iframe>
+        </sc-if>
+      </div>
+    </div>
+  </section>
   <section id="pricing" data-screen-label="Pricing" style="padding:100px 24px;background:#0F1510;border-top:1px solid rgba(255,255,255,0.05)">
     <div style="max-width:1000px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:34px;text-align:center">
       <div style="display:flex;flex-direction:column;gap:14px;align-items:center">
@@ -517,7 +539,7 @@ class Component extends DCLogic {
     { title: 'Excel export in one tap', body: 'A tax-ready workbook for your accountant, for the whole tax year.' },
     { title: '120+ countries', body: 'Your local currency, in kilometres or miles.' },
   ];
-  state = { hero: true, mode: 'bt', bt: 0, sh: 0, shMode: 'same', shTime: 1, shDay: 0, sheet: 0, ded: 0, region: 'nz', cat: 'All', q: '', open: 0 };
+  state = { tt: false, hero: true, mode: 'bt', bt: 0, sh: 0, shMode: 'same', shTime: 1, shDay: 0, sheet: 0, ded: 0, region: 'nz', cat: 'All', q: '', open: 0 };
   componentDidMount() {
     this._hero = setInterval(() => this.setState((s) => ({ hero: !s.hero })), 3200);
     if (!window.TT_REPORT) this._poll = setInterval(() => { if (window.TT_REPORT) { clearInterval(this._poll); this.forceUpdate(); } }, 200);
@@ -664,6 +686,7 @@ class Component extends DCLogic {
       nextSheet: () => this.setState((s) => ({ sheet: (s.sheet + 1) % Math.max(1, R.length) })),
       dedParts, ded: dedData[st.ded],
       isYouTube: !!yt, ytSrc: yt ? `https://www.youtube.com/embed/${yt[1]}` : '', isFile: !yt, videoSrc: yt ? '' : (vurl || 'assets/taxitracker-promo.mp4'),
+      playTikTok: set({ tt: true }), ttOn: st.tt, ttOff: !st.tt,
       setNZ: set({ region: 'nz' }), setOther: set({ region: 'other' }), isNZ: st.region === 'nz', isOther: st.region !== 'nz',
       nzBg: st.region === 'nz' ? GREEN : 'transparent', nzFg: st.region === 'nz' ? '#fff' : '#C9D1CB', otBg: st.region !== 'nz' ? GREEN : 'transparent', otFg: st.region !== 'nz' ? '#fff' : '#C9D1CB',
       faqQuery: st.q, onFaqSearch: (e) => this.setState({ q: e.target.value }),
