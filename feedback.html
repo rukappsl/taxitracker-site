@@ -96,11 +96,13 @@ function thanks(a) {
     '<button id="send">Send to Ranga</button>';
   document.getElementById('send').onclick = function () {
     var text = document.getElementById('more').value.trim();
-    if (!text) { document.getElementById('more').focus(); return; }
-    this.disabled = true;
-    save(text).then(function () {
+    var done = function () {
       card.innerHTML = "<h1>Got it, thank you!</h1><p>I'll read this myself. If you'd like to talk about it, just reply to my email.</p>";
-    }).catch(problem);
+    };
+    // The answer they tapped was saved when this page opened, so an empty box needs nothing more.
+    if (!text) { done(); return; }
+    this.disabled = true;
+    save(text).then(done).catch(problem);
   };
 }
 
