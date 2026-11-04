@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thank you - TaxiTracker</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/app-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F4F5F3;color:#161B16;font-family:Poppins,Arial,sans-serif;font-size:16px;line-height:1.55}
+main{max-width:520px;margin:0 auto;padding:32px 16px 48px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;margin-bottom:22px}
+.brand img{width:38px;height:38px;border-radius:10px}
+.card{background:#fff;border:1px solid #E2E5E0;border-radius:18px;padding:24px 20px}
+h1{margin:0 0 8px;font-size:25px;line-height:1.2;font-weight:800;letter-spacing:-.4px}
+p{margin:0 0 14px}
+.answer{display:inline-block;margin:0 0 14px;padding:6px 13px;border-radius:999px;background:#E7F7F0;color:#07603F;font-weight:600;font-size:14px}
+ol{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:6px}
+label{display:block;margin:6px 0 8px;font-weight:600}
+textarea{width:100%;min-height:110px;padding:12px;border:1px solid #C9D2CC;border-radius:12px;font:inherit;font-size:16px;resize:vertical}
+textarea:focus{outline:2px solid #0E9F6E;border-color:#0E9F6E}
+button{display:block;width:100%;margin-top:12px;padding:14px;border:0;border-radius:999px;background:#0E9F6E;color:#fff;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
+button:disabled{opacity:.6}
+.note{font-size:14px;color:#55625A}
+.hide{display:none}
+a{color:#07704C}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><img src="assets/app-icon.png" alt=""><span>TaxiTracker</span></div>
+  <div class="card" id="card"><p>One moment...</p></div>
+</main>
+<script>
+// The answers from the trial feedback email. Each email link carries the driver's private token and the
+// answer they tapped; the database function checks the token. Keep the wording in step with
+// TaxiTracker-marketing/tools/feedback-email/email.js. This page is not linked from anywhere else.
+var SUPABASE_URL = 'https://erspjpoxgwlwetsmthob.supabase.co';
+var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyc3BqcG94Z3dsd2V0c210aG9iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNDA0NjUsImV4cCI6MjEwMjYxNjQ2NX0.5ohQuKjkz07JHQ9RyoMTwG59Zbc_EH5FStU5_nivSfg';
+var CONTACT = '<a href="mailto:taxitracker@rukappsl.com">taxitracker@rukappsl.com</a>';
+
+var STEPS = '<ol><li>Open TaxiTracker when you set off and tap <b>Start trip</b>.</li><li>Drive as usual. GPS keeps counting, even with your phone locked.</li><li>When you finish, tap <b>Stop trip</b> and add your fare.</li></ol>';
+var ANSWERS = {
+  no_time: { label: "I haven't had time yet", say: 'No problem at all. When you next drive, just tap <b>Start trip</b>. It only takes a second.', ask: 'Is there anything that would make it easier to remember?' },
+  how_to_start: { label: "I'm not sure how to start", say: "Thanks for telling me. It's easy once you've done it once:" + STEPS, ask: 'What was confusing? Your words will help me fix it.' },
+  did_not_work: { label: "Something didn't work", say: "I'm sorry about that, and I'd like to fix it.", ask: 'What happened? Please tell me as much as you can.' },
+  not_needed: { label: "It's not what I need", say: 'Thanks for being honest. That really helps.', ask: 'What were you hoping it would do?' },
+  other: { label: 'Something else', say: "Thank you. I'd love to hear more.", ask: 'What has stopped you so far?' },
+  works_well: { label: 'It worked well', say: "That's great to hear. Thank you!", ask: 'What did you like, and is anything missing?' },
+  could_be_better: { label: "It's OK, but could be better", say: 'Thanks, this is exactly what I need to know.', ask: 'What would make it better for you?' },
+  distance_wrong: { label: "The distance wasn't right", say: "I'm sorry about that, and I'd like to look into it.", ask: 'About how far did you drive, and what did the app show?' },
+  hard_to_use: { label: "It's hard to use", say: "Thanks for telling me. I'd like to make it easier.", ask: 'Which part was hard?' }
+};
+
+var q = new URLSearchParams(location.search);
+var token = q.get('t') || '';
+var answer = q.get('a') || '';
+var card = document.getElementById('card');
+
+function save(comment) {
+  if (token === 'preview') return Promise.resolve();
+  return fetch(SUPABASE_URL + '/rest/v1/rpc/email_feedback_submit', {
+    method: 'POST',
+    headers: { apikey: ANON_KEY, Authorization: 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ p_token: token, p_answer: answer, p_comment: comment || null })
+  }).then(function (res) {
+    if (!res.ok) throw new Error('save failed');
+    return res.json();
+  }).then(function (result) {
+    if (result !== 'ok') throw new Error('not accepted');
+  });
+}
+
+function problem() {
+  card.innerHTML = "<h1>That didn't save</h1><p>Sorry, something went wrong on our side. Please reply to the email, or write to " + CONTACT + '. I read every message.</p>';
+}
+
+function unsubscribe() {
+  // Takes a tap, because some work email systems open every link in a message to check it for safety.
+  card.innerHTML = "<h1>Unsubscribe?</h1><p>You won't get any more of these emails from TaxiTracker. Your account and records won't change.</p><button id=\"go\">Unsubscribe</button>";
+  document.getElementById('go').onclick = function () {
+    this.disabled = true;
+    save().then(function () {
+      card.innerHTML = "<h1>You're unsubscribed</h1><p>You won't get any more of these emails. Your account and records have not changed.</p>";
+    }).catch(problem);
+  };
+}
+
+function thanks(a) {
+  card.innerHTML = '<h1>Thank you!</h1><div class="answer">' + a.label + '</div><p>' + a.say + '</p>' +
+    '<label for="more">' + a.ask + ' <span class="note">(optional)</span></label><textarea id="more" maxlength="2000"></textarea>' +
+    '<button id="send">Send to Ranga</button>';
+  document.getElementById('send').onclick = function () {
+    var text = document.getElementById('more').value.trim();
+    if (!text) { document.getElementById('more').focus(); return; }
+    this.disabled = true;
+    save(text).then(function () {
+      card.innerHTML = "<h1>Got it, thank you!</h1><p>I'll read this myself. If you'd like to talk about it, just reply to my email.</p>";
+    }).catch(problem);
+  };
+}
+
+if (!token) {
+  card.innerHTML = '<h1>Nothing to see here</h1><p>This page opens from a TaxiTracker email. You can reach us at ' + CONTACT + '.</p>';
+} else if (answer === 'unsubscribe') {
+  unsubscribe();
+} else if (!ANSWERS[answer]) {
+  problem();
+} else {
+  thanks(ANSWERS[answer]);
+  save().catch(problem);
+}
+</script>
+</body>
+</html>
